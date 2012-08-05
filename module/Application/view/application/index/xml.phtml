@@ -1,0 +1,40 @@
+<?php echo $this->doctype; ?>
+
+<schedule>
+
+<?php
+foreach ($this->data as $label => $day) {
+?>
+    <day>
+        <label><?php echo $label ?></label>
+        <date><?php echo $day['date'] ?></date>
+        <link href="<?php echo $day['link'] ?>" />
+<?php 
+    foreach ($this->broadcast_timeslots as $timeslot) {
+        if ($day[$timeslot]) {
+?>
+        <broadcast timeslot="<?php echo $timeslot ?>">
+<?php 
+            foreach ($day[$timeslot] as $time => $slot) {
+?>
+            <slot>
+                <time><?php echo $time ?></time>
+                <title><?php echo $slot['title'] ?></title>
+                <subtitle><?php echo $slot['subtitle'] ?></subtitle>
+                <description><?php echo $slot['description'] ?></description>
+                <repeat><?php echo $slot['repeat'] ?></repeat>
+                <link href="<?php echo $slot['link'] ?>" />
+            </slot>
+<?php 
+            }
+?>
+        </broadcast>
+<?php 
+        }
+    }
+?>
+    </day>
+<?php
+}   
+?>
+</schedule>

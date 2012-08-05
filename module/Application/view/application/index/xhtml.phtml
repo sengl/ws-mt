@@ -1,0 +1,59 @@
+<?php
+$this->headTitle('BBC One schedule for London');
+?>
+        
+        <div class="row-fluid">
+            <h1>BBC One - London</h1>
+            <p>Schedule overview for BBC One, London.</p>
+        </div>
+
+<?php 
+foreach ($this->data as $label => $day) {
+?>
+
+        <div class="row-fluid">
+            <h2><a href="<?php echo $day['link'] ?>"><?php echo ucfirst($label) ?>, <?php echo $day['date'] ?></a></h2>
+
+<?php 
+    foreach ($this->broadcast_timeslots as $timeslot) {
+        if ($day[$timeslot]) {
+?>
+
+            <div class="timeslot">
+            	<h3><?php echo ucfirst($timeslot) ?></h3>
+            	<table class="table table-bordered table-striped">
+            		<thead>
+            			<tr>
+            				<th class="span1">Time</th>
+            				<th class="span10">Program</th>
+            			</tr>
+            		</thead>
+            		<tbody>
+
+<?php 
+            foreach ($day[$timeslot] as $time => $slot) {
+?>
+
+            			<tr>
+            				<td><?php echo $time ?></td>
+            				<td>
+            				    <ul class="unstyled">
+            				        <li><h4><a href="<?php echo $slot['link'] ?>"><?php echo $slot['title'] ?></a></h4></li>
+            				        <li style="color: gray;"><?php echo $slot['subtitle'] ?></li>
+            				        <li><?php echo $slot['description']; if ($slot['repeat']) echo ' (R)'; ?></li>
+            				    </ul>
+            				</td>
+            			</tr>
+<?php 
+            }
+?>
+            		</tbody>
+            	</table>
+            </div>
+<?php 
+        }
+    }
+?>
+        </div>
+<?php 
+}
